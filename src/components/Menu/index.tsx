@@ -31,7 +31,7 @@ export function Menu() {
     return (
         <>
             <ProductModal
-                visible={true}
+                visible={isModalVisible}
                 onClose={() => setIsModalVisible(false)}
                 product={selectedProduct}
             />
