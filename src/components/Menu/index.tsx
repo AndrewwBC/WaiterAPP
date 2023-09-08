@@ -1,7 +1,6 @@
 import { FlatList, TouchableOpacity } from "react-native";
 import { useState } from "react";
 
-import { products } from "../../mocks/products";
 import { Text } from "../Text";
 
 import {
@@ -17,7 +16,12 @@ import { PlusCircle } from "../Icons/PlusCircle";
 import { ProductModal } from "../ProductModal";
 import { Product as ProductType } from "../../types/Product";
 
-export function Menu() {
+interface MenuProps {
+    onAddToCart: (product: ProductType) => void;
+    products: ProductType[];
+}
+
+export function Menu({ onAddToCart, products }: MenuProps) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<null | ProductType>(
         null
@@ -34,6 +38,7 @@ export function Menu() {
                 visible={isModalVisible}
                 onClose={() => setIsModalVisible(false)}
                 product={selectedProduct}
+                onAddToCart={onAddToCart}
             />
 
             <FlatList
@@ -65,7 +70,7 @@ export function Menu() {
                             </Text>
                         </ProductDetails>
 
-                        <AddToCartButton>
+                        <AddToCartButton onPress={() => onAddToCart(product)}>
                             <PlusCircle />
                         </AddToCartButton>
                     </Product>
