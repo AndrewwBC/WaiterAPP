@@ -1,4 +1,4 @@
-import { FlatList, Modal } from "react-native";
+import { FlatList, ImageBackground, Modal } from "react-native";
 
 import { Text } from "../Text";
 import { Product } from "../../types/Product";
@@ -48,7 +48,7 @@ export function ProductModal({
         >
             <Image
                 source={{
-                    uri: `https://static.itdg.com.br/images/1200-630/c0402ec0fd16e13c7b7b691151d53e1d/277814-original.jpg`,
+                    uri: `http://192.168.3.8:3001/uploads/${product.imagePath}`,
                 }}
             >
                 <CloseButton onPress={onClose}>
@@ -66,7 +66,7 @@ export function ProductModal({
                     </Text>
                 </Header>
 
-                {product.ingredients.length > 0 && (
+                {product.ingredients?.length > 0 && (
                     <IngredientsContainer>
                         <Text weight="600" color="#666">
                             Ingredientes
@@ -79,7 +79,10 @@ export function ProductModal({
                             style={{ marginTop: 16 }}
                             renderItem={({ item: ingredient }) => (
                                 <Ingredient>
-                                    <Text>{ingredient.icon}</Text>
+                                    <Image
+                                        style={{ width: 32, height: 32 }}
+                                        source={{ uri: ingredient.icon }}
+                                    />
                                     <Text size={14} color="#666">
                                         {ingredient.name}
                                     </Text>

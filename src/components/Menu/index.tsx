@@ -51,7 +51,7 @@ export function Menu({ onAddToCart, products }: MenuProps) {
                     <Product onPress={() => handleOpenModal(product)}>
                         <ProductImage
                             source={{
-                                uri: `https://img.freepik.com/premium-photo/whole-italian-pizza-wooden-table-with-ingredients_251318-13.jpg`,
+                                uri: `http://192.168.3.8:3001/uploads/${product.imagePath}`,
                             }}
                         />
 

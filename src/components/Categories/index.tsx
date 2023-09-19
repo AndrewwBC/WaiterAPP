@@ -1,17 +1,24 @@
-import { FlatList } from "react-native";
+import { FlatList, Image, ImageBackground } from "react-native";
 import { useState } from "react";
 
-import { categories } from "../../mocks/categories";
 import { Text } from "../Text";
 
-import { Category, Icon } from "./styles";
+import { CategoryContainer, Icon } from "./styles";
+import { Category } from "../../types/Category";
 
-export function Categories() {
+interface CategoriesProps {
+    categories: Category[];
+    onSelectCategory: (categoryId: string) => Promise<void>;
+}
+
+export function Categories({ categories, onSelectCategory }: CategoriesProps) {
     const [selectedCategory, setSelectedCategory] = useState("");
 
     function handleSelectCategory(categoryId: string) {
-        const isTheSameCategoryId = categoryId === selectedCategory;
-        setSelectedCategory(isTheSameCategoryId ? "" : categoryId);
+        const category = selectedCategory === categoryId ? "" : categoryId;
+
+        onSelectCategory(category);
+        setSelectedCategory(category);
     }
 
     return (
@@ -24,13 +31,20 @@ export function Categories() {
             renderItem={({ item: category }) => {
                 const isSelected = selectedCategory === category._id;
                 return (
-                    <Category
+                    <CategoryContainer
                         onPress={() => handleSelectCategory(category._id)}
                     >
                         <Icon>
-                            <Text opacity={isSelected ? 1 : 0.5}>
-                                {category.icon}
-                            </Text>
+                            <Image
+                                style={{
+                                    width: 32,
+                                    height: 32,
+                                    opacity: isSelected ? 1 : 0.5,
+                                }}
+                                source={{
+                                    uri: category.icon,
+                                }}
+                            />
                         </Icon>
                         <Text
                             opacity={isSelected ? 1 : 0.5}
@@ -39,7 +53,7 @@ export function Categories() {
                         >
                             {category.name}
                         </Text>
-                    </Category>
+                    </CategoryContainer>
                 );
             }}
         />
